@@ -26,7 +26,7 @@ default: &default
 
 development:
   <<: *default
-  database: workshop202207_development
+  database: workshop_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -60,7 +60,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: workshop202207_test
+  database: workshop_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -84,6 +84,6 @@ test:
 #
 production:
   <<: *default
-  database: workshop202207_production
-  username: workshop202207
-  password: <%= ENV["WORKSHOP202207_DATABASE_PASSWORD"] %>
+  database: workshop_production
+  username: workshop
+  password: <%= ENV["WORKSHOP_DATABASE_PASSWORD"] %>
