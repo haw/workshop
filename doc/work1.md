@@ -63,7 +63,7 @@ TapyrusAPI ではアクセストークン毎に wallet が作成されていま�
 ```
 
 これらのコードは、TapyrusAPI の次の機能を呼び出しています。
-https://doc.api.tapyrus.chaintope.com/#tag/address/operation/createAddress
+https://doc.api.tapyrus.chaintope.com/#operation/createAddress
 
 これでアドレスを新規作成できるようになりました。以下のコマンドを実行してアドレスを作成しましょう。
 
