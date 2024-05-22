@@ -158,7 +158,7 @@ end
 ```
 
 これらのコードは、TapyrusAPI のトークンの総量取得機能を呼び出すものです。
-https://doc.api.tapyrus.chaintope.com/#tag/token/operation/getTokens
+https://doc.api.tapyrus.chaintope.com/#operation/getTokensV2
 
 これでコマンドが実行できるようになりました。以下のコマンドを実行してトークンを確認しましょう。
 自分のアドレスに送付した人は、発行時と変わらないと思いますが、他人のアドレスに送付した人は自分が発行したトークンが減少しています。
