@@ -105,7 +105,7 @@ end
 ```
 
 これらのコードは、先程と同様に TapyrusAPI のトークン新規発行機能を呼び出すものです。
-https://doc.api.tapyrus.chaintope.com/#tag/token/operation/issueToken
+https://doc.api.tapyrus.chaintope.com/#operation/issueTokenV2
 
 ドキュメントにも記載がある通り、TapyrusAPI では以下の 3 種類のトークンが発行可能です。
 
