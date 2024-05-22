@@ -59,6 +59,7 @@ Docker で用意された環境を起動します。
 - 以下のコマンドを実行しデータベースを作成します。
 - ※WSL 2(Ubuntu)の人はdockerコマンドには sudo をつける
 ```
+docker compose build
 docker compose run --rm web bin/rails db:create
 ```
 
