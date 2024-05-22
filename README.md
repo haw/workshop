@@ -18,7 +18,7 @@ git clone https://github.com/haw/workshop.git
 ```
 cd workshop
 git checkout -b cli origin/workshop20xx (※20xxの部分は年度毎に変更)
-git status でブランチがworkshop20xx であることを確認
+git status でブランチがorigin/workshop20xx であることを確認
 ```
 
 ## 1. TapyrusAPI の準備
