@@ -121,6 +121,7 @@ docker compose exec web bin/rails api:post_tokens_issue'[100,1,10]'
 ```
 
 実行結果として以下のように、新規発行されたトークンの ID とトークン新規発行のために発行された transaction の id が表示されれば、正しく実装できています。
+以下はあくまでも例ですので、`token_id`と`txid`は実行の都度変わります。
 
 ```ruby
 {:token_id=>"c154fb27bbb2c91c1eec9357032cf029e0bf6257b429a427d5587504b3c85ca11c", :txid=>"a3d9c914655707240cb80757b7a377f8f741d6455bc4f6baba2645d49ff1edb0"}
