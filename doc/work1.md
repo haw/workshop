@@ -72,6 +72,7 @@ docker compose exec web bin/rails api:post_addresses
 ```
 
 実行結果として以下のように、新規発行されたアドレスが表示されれば正しく実装されています。
+以下はあくまでも例ですので、実行の都度異なるアドレスが発行されます。
 
 ```bash
 "13aV8XCYZDQvPFEDFoYrE69qizYWJpPrpT"
