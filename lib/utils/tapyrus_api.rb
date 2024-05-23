@@ -6,7 +6,7 @@ class TapyrusApi
 
   class << self
     def get_tokens(confirmation_only = true)
-      res = instance.connection.get("/api/v1/tokens") do |req|
+      res = instance.connection.get("/api/v2/tokens") do |req|
         req.headers['Authorization'] = "Bearer #{instance.access_token}"
         req.params['confirmation_only'] = confirmation_only
       end
@@ -15,7 +15,7 @@ class TapyrusApi
     end
 
     def post_tokens_issue(amount:, token_type: 1, split: 1)
-      res = instance.connection.post("/api/v1/tokens/issue") do |req|
+      res = instance.connection.post("/api/v2/tokens/issue") do |req|
         req.headers['Authorization'] = "Bearer #{instance.access_token}"
         req.headers['Content-Type'] = 'application/json'
         req.body = JSON.generate({ "amount" => amount, "token_type" => token_type, "split" => split })
@@ -46,7 +46,7 @@ class TapyrusApi
     end
 
     def put_tokens_transfer(token_id, address:, amount:)
-      res = instance.connection.put("/api/v1/tokens/#{token_id}/transfer") do |req|
+      res = instance.connection.put("/api/v2/tokens/#{token_id}/transfer") do |req|
         req.headers['Authorization'] = "Bearer #{instance.access_token}"
         req.headers['Content-Type'] = 'application/json'
         req.body = JSON.generate({ "address" => address, "amount" => amount })
