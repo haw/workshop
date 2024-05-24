@@ -128,7 +128,7 @@ docker compose exec web bin/rails api:post_tokens_issue'[100,1,10]'
 ```
 
 このトークンは、再発行が可能なので TapyrusAPI のトークンの再発行機能を呼び出すことで、追加発行が可能です。
-https://doc.api.tapyrus.chaintope.com/#tag/token/operation/reissueToken
+https://doc.api.tapyrus.chaintope.com/#operation/issueTokenV2
 
 token_type に 2 を指定すると、再発行不可能なトークンとなるため、総量が固定され追加発行はできなくなります。
 
