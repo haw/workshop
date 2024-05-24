@@ -156,7 +156,7 @@ def put_tokens_transfer(token_id, address:, amount:)
 end
 ```
 
-これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#tag/token/operation/transferToken
+これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#operation/transferTokenV2
 
 実装が完了したら、実際に誰かにトークンを送ってみましょう。
 
