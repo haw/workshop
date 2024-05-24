@@ -104,7 +104,7 @@ end
 ```
 
 これらのコードは、TapyrusAPI の次の機能を呼び出しています。
-https://doc.api.tapyrus.chaintope.com/#tag/address/operation/getAddresses
+https://doc.api.tapyrus.chaintope.com/#operation/getAddresses
 
 実装が完了したら、http://localhost:3000/wallets にアクセスしてみましょう。
 自分のwalletで管理しているアドレスの一覧が表示されます。
