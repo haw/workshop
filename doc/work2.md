@@ -130,7 +130,7 @@ def post_addresses(purpose: "general")
 end
 ```
 
-これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#tag/address/operation/createAddress
+これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#operation/createAddress
 
 `アドレス作成` を押すと 1 つアドレスが新規に作成されます。
 このアドレスをトークンの送り主に教えましょう。
