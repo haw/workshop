@@ -1,7 +1,3 @@
-# ワークで実装
-ACCESS_TOKEN = "ここにアクセストークンを記入してください"
-TAPYRUS_API_ENDPOINT_URL = "ここにURLを記入してください"
-
 class TapyrusApi
   include Singleton
 
@@ -10,16 +6,16 @@ class TapyrusApi
 
   class << self
     def get_tokens(confirmation_only = true)
-      res = instance.connection.get("/api/v1/tokens") do |req|
+      res = instance.connection.get("/api/v2/tokens") do |req|
         req.headers['Authorization'] = "Bearer #{instance.access_token}"
         req.params['confirmation_only'] = confirmation_only
       end
 
-      res.body
+      res.body[:tokens]
     end
 
     def post_tokens_issue(amount:, token_type: 1, split: 1)
-      res = instance.connection.post("/api/v1/tokens/issue") do |req|
+      res = instance.connection.post("/api/v2/tokens/issue") do |req|
         req.headers['Authorization'] = "Bearer #{instance.access_token}"
         req.headers['Content-Type'] = 'application/json'
         req.body = JSON.generate({ "amount" => amount, "token_type" => token_type, "split" => split })
@@ -50,7 +46,7 @@ class TapyrusApi
     end
 
     def put_tokens_transfer(token_id, address:, amount:)
-      res = instance.connection.put("/api/v1/tokens/#{token_id}/transfer") do |req|
+      res = instance.connection.put("/api/v2/tokens/#{token_id}/transfer") do |req|
         req.headers['Authorization'] = "Bearer #{instance.access_token}"
         req.headers['Content-Type'] = 'application/json'
         req.body = JSON.generate({ "address" => address, "amount" => amount })
@@ -86,8 +82,8 @@ class TapyrusApi
   attr_reader :connection, :access_token, :url
 
   def initialize
-    @access_token = ACCESS_TOKEN
-    @url = TAPYRUS_API_ENDPOINT_URL
+    @access_token = ENV['ACCESS_TOKEN']
+    @url = ENV['TAPYRUS_API_ENDPOINT_URL']
     raise TapyrusApi::UrlNotFound, "接続先URLが正しくありません" if URI::DEFAULT_PARSER.make_regexp.match(@url).blank?
     @connection ||= Faraday.new(@url) do |builder|
       builder.response :raise_error
@@ -100,20 +96,20 @@ class TapyrusApi
   private
 
   def client_cert
-    OpenSSL::PKCS12.new(load_client_cert_p12, 'b3workshop').certificate
+    OpenSSL::PKCS12.new(load_client_cert_p12, ENV['PKCS_12_PASS']).certificate
   rescue Errno::ENOENT => e
     Rails.logger.error(e)
     raise TapyrusApi::FileNotFound, 'クライアント証明書がありません'
   end
 
   def client_key
-    OpenSSL::PKCS12.new(load_client_cert_p12, 'b3workshop').key
+    OpenSSL::PKCS12.new(load_client_cert_p12, ENV['PKCS_12_PASS']).key
   rescue Errno::ENOENT => e
     Rails.logger.error(e)
     raise TapyrusApi::FileNotFound, 'クライアント証明書がありません'
   end
 
   def load_client_cert_p12
-    File.read(Rails.root.join("tapyrus_api_client_cert_2022-07-26.p12"))
+    File.read(Rails.root.join("tapyrus_api_client_cert.p12"))
   end
 end

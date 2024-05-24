@@ -1,4 +1,3 @@
-version: "3"
 services:
   web:
     build: "."
@@ -7,6 +6,9 @@ services:
       - DATABASE_HOST=db
       - DATABASE_USER=postgres
       - DATABASE_PASSWORD=password
+      - ACCESS_TOKEN=$ACCESS_TOKEN
+      - TAPYRUS_API_ENDPOINT_URL=$TAPYRUS_API_ENDPOINT_URL
+      - PKCS_12_PASS=$PKCS_12_PASS
     volumes:
       - .:/myapp
     ports:
