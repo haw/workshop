@@ -11,7 +11,7 @@ class TapyrusApi
         req.params['confirmation_only'] = confirmation_only
       end
 
-      res.body
+      res.body[:tokens]
     end
 
     def post_tokens_issue(amount:, token_type: 1, split: 1)
