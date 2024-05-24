@@ -24,7 +24,7 @@ def get_tokens(confirmation_only = true)
 end
 ```
 
-これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#tag/token/operation/getTokens
+これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#operation/getTokensV2
  
 実装が完了したら、 http://localhost:3000/tokens にアクセスしてみましょう。現在保有しているトークンと、保有量が表示されます。前回のハンズオンで作成したトークンが表示されると思います。
 
