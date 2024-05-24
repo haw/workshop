@@ -62,7 +62,7 @@ TapyrusAPI ではアクセストークン毎に wallet が作成されていま�
     req.body = JSON.generate({ "amount" => amount, "token_type" => token_type, "split" => split })
 ```
 
-これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#tag/token/operation/issueToken
+これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#operation/issueTokenV2
 
 ドキュメントにも記載がある通り、TapyrusAPI では以下の 3 種類のトークンが発行可能です。
 
