@@ -20,7 +20,7 @@ def get_tokens(confirmation_only = true)
     req.params['confirmation_only'] = confirmation_only
   end
 
-  res.body
+  res.body[:tokens]
 end
 ```
 
