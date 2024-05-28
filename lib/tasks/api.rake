@@ -5,7 +5,7 @@ namespace :api do
       page = args.page.presence || 1
       purpose = args.purpose.presence || "general"
   
-      res = TapyrusApi.get_addresses(per: per, page: page, purpose: purpose)
+      res = TapyrusTaskApi.get_addresses(per: per, page: page, purpose: purpose)
       pp res
     end
   
@@ -13,7 +13,7 @@ namespace :api do
     task :post_addresses, [:purpose] => :environment do |task, args|
       purpose = args.purpose.presence || "general"
   
-      res = TapyrusApi.post_addresses(purpose: purpose)
+      res = TapyrusTaskApi.post_addresses(purpose: purpose)
       pp res
     end
   
@@ -21,7 +21,7 @@ namespace :api do
     task :get_tokens, [:confirmation_only] => :environment do |task, args|
       confirmation_only = args.confirmation_only.presence || true
   
-      res = TapyrusApi.get_tokens(confirmation_only)
+      res = TapyrusTaskApi.get_tokens(confirmation_only)
       pp res
     end
   
@@ -36,7 +36,7 @@ namespace :api do
       token_type = args.token_type.presence || 1
       split = args.split.presence || 1
   
-      res = TapyrusApi.post_tokens_issue(amount: amount, token_type: token_type, split: split)
+      res = TapyrusTaskApi.post_tokens_issue(amount: amount, token_type: token_type, split: split)
       pp res
     end
   
@@ -51,7 +51,7 @@ namespace :api do
         next
       end
   
-      res = TapyrusApi.put_tokens_transfer(token_id, address: address, amount: amount)
+      res = TapyrusTaskApi.put_tokens_transfer(token_id, address: address, amount: amount)
       pp res
     end
   end
