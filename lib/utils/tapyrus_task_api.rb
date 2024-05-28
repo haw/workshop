@@ -5,25 +5,6 @@ class TapyrusTaskApi
   class UrlNotFound < StandardError; end
 
   class << self
-    def get_tokens(confirmation_only = true)
-      res = instance.connection.get("/api/v2/tokens") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-        req.params['confirmation_only'] = confirmation_only
-      end
-
-      res.body[:tokens]
-    end
-
-    def post_tokens_issue(amount:, token_type: 1, split: 1)
-      res = instance.connection.post("/api/v2/tokens/issue") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-        req.headers['Content-Type'] = 'application/json'
-        req.body = JSON.generate({ "amount" => amount, "token_type" => token_type, "split" => split })
-      end
-
-      res.body
-    end
-
     def get_addresses(per: 25, page: 1, purpose: "general")
       res = instance.connection.get("/api/v1/addresses") do |req|
         req.headers['Authorization'] = "Bearer #{instance.access_token}"
@@ -43,6 +24,25 @@ class TapyrusTaskApi
       end
 
       res.body
+    end
+
+    def post_tokens_issue(amount:, token_type: 1, split: 1)
+      res = instance.connection.post("/api/v2/tokens/issue") do |req|
+        req.headers['Authorization'] = "Bearer #{instance.access_token}"
+        req.headers['Content-Type'] = 'application/json'
+        req.body = JSON.generate({ "amount" => amount, "token_type" => token_type, "split" => split })
+      end
+
+      res.body
+    end
+
+    def get_tokens(confirmation_only = true)
+      res = instance.connection.get("/api/v2/tokens") do |req|
+        req.headers['Authorization'] = "Bearer #{instance.access_token}"
+        req.params['confirmation_only'] = confirmation_only
+      end
+
+      res.body[:tokens]
     end
 
     def put_tokens_transfer(token_id, address:, amount:)
