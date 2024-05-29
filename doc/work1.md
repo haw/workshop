@@ -31,11 +31,11 @@ docker compose exec web bin/rails api:get_addresses
 docker compose exec web bin/rails api:post_addresses
 ```
 
-このコマンドで実行されるのは `lib/tasks/api.rake` の 13 行目です。この中で`TapyrusApi.post_addresses(purpose: purpose)`を呼び出しています。`TapyrusApi` は `lib/utils/tapyrus_api.rb` に定義されています。
+このコマンドで実行されるのは `lib/tasks/api.rake` の 13 行目です。この中で`TapyrusTaskApi.post_addresses(purpose: purpose)`を呼び出しています。`TapyrusTaskApi` は `lib/utils/tapyrus_api.rb` に定義されています。
 
-しかし、この `TapyrusApi` クラスの `post_addresses` メソッドは中身がありませんので次のように実装します。
+しかし、この `TapyrusTaskApi` クラスの `post_addresses` メソッドは中身がありませんので次のように実装します。
 
-編集する対象のファイルは `lib/utils/tapyrus_api.rb` です。
+編集する対象のファイルは `lib/utils/tapyrus_task_api.rb` です。
 
 ```ruby
 def post_addresses(purpose: "general")
@@ -86,7 +86,7 @@ docker compose exec web bin/rails api:post_addresses
 docker compose exec web bin/rails api:post_tokens_issue'[100,1,10]'
 ```
 
-このコマンドで実行されるのは `lib/tasks/api.rake` の 29 行目です。この中で`TapyrusApi.post_tokens_issue(amount: amount, token_type: token_type, split: split)`を呼び出しています。
+このコマンドで実行されるのは `lib/tasks/api.rake` の 29 行目です。この中で`TapyrusTaskApi.post_tokens_issue(amount: amount, token_type: token_type, split: split)`を呼び出しています。
 
 先ほどと同様にメソッドの中身がありませんので実装しましょう。
 
@@ -142,7 +142,7 @@ token_type を 3 にすると NFT となるため、トークンの発行数は�
 docker compose exec web bin/rails api:get_tokens
 ```
 
-このコマンドで実行されるのは `lib/tasks/api.rake` の 21 行目です。この中で`TapyrusApi.get_tokens(confirmation_only)`を呼び出しています。
+このコマンドで実行されるのは `lib/tasks/api.rake` の 21 行目です。この中で`TapyrusTaskApi.get_tokens(confirmation_only)`を呼び出しています。
 
 先ほどと同様にメソッドの中身がありませんので実装しましょう。
 
@@ -184,7 +184,7 @@ docker compose exec web bin/rails api:get_tokens
 docker compose exec web bin/rails api:put_tokens_transfer'[<token_id>,<address>,<amount>]'
 ```
 
-このコマンドで実行されるのは `lib/tasks/api.rake` の 44 行目です。この中で`TapyrusApi.put_tokens_transfer(token_id, address: address, amount: amount)`を呼び出しています。
+このコマンドで実行されるのは `lib/tasks/api.rake` の 44 行目です。この中で`TapyrusTaskApi.put_tokens_transfer(token_id, address: address, amount: amount)`を呼び出しています。
 
 先ほどと同様にメソッドの中身がありませんので実装しましょう。
 
