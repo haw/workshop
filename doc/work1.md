@@ -31,7 +31,7 @@ docker compose exec web bin/rails api:get_addresses
 docker compose exec web bin/rails api:post_addresses
 ```
 
-このコマンドで実行されるのは `lib/tasks/api.rake` の 13 行目です。この中で`TapyrusTaskApi.post_addresses(purpose: purpose)`を呼び出しています。`TapyrusTaskApi` は `lib/utils/tapyrus_api.rb` に定義されています。
+このコマンドで実行されるのは `lib/tasks/api.rake` の 13 行目です。この中で`TapyrusTaskApi.post_addresses(purpose: purpose)`を呼び出しています。`TapyrusTaskApi` は `lib/utils/tapyrus_task_api.rb` に定義されています。
 
 しかし、この `TapyrusTaskApi` クラスの `post_addresses` メソッドは中身がありませんので次のように実装します。
 
@@ -90,7 +90,7 @@ docker compose exec web bin/rails api:post_tokens_issue'[100,1,10]'
 
 先ほどと同様にメソッドの中身がありませんので実装しましょう。
 
-編集する対象のファイルは `lib/utils/tapyrus_api.rb` です。
+編集する対象のファイルは `lib/utils/tapyrus_task_api.rb` です。
 
 ```ruby
 def post_tokens_issue(amount:, token_type: 1, split: 1)
@@ -188,7 +188,7 @@ docker compose exec web bin/rails api:put_tokens_transfer'[<token_id>,<address>,
 
 先ほどと同様にメソッドの中身がありませんので実装しましょう。
 
-編集する対象のファイルは `lib/utils/tapyrus_api.rb` です。
+編集する対象のファイルは `lib/utils/tapyrus_task_api.rb` です。
 
 ```ruby
 def put_tokens_transfer(token_id, address:, amount:)
