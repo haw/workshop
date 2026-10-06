@@ -1,0 +1,41 @@
+{
+  "name": "Tapyrus Workshop 2026",
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "docker-compose.extend.yml"
+  ],
+  "service": "web",
+  "workspaceFolder": "/myapp",
+  
+  "remoteEnv": {
+    "DATABASE_HOST": "db",
+    "DATABASE_USER": "postgres",
+    "DATABASE_PASSWORD": "password",
+    "RAILS_DEVELOPMENT_HOSTS": ".githubpreview.dev,.preview.app.github.dev,.app.github.dev",
+    "CODESPACES": "true"
+  },
+  
+  "waitFor": "postCreateCommand",
+  "postCreateCommand": "bundle install && bundle exec rails db:create && bundle exec rails db:migrate",
+  
+  // VS Code接続後に元のコマンドを実行
+  "postAttachCommand": {
+    "server": "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+  },
+  
+  "portsAttributes": {
+    "3000": {
+      "label": "Application",
+      "onAutoForward": "openBrowserOnce"
+    }
+  },
+  "forwardPorts": [3000],
+  "customizations": {
+    "codespaces": {
+      "openFiles": []
+    }
+  },
+
+  "overrideCommand": false,
+  "remoteUser": "root"
+}

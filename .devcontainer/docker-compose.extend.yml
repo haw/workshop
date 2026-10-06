@@ -1,0 +1,15 @@
+services:
+  web:
+    # 開発時はコンテナを起動したままにする
+    command: tail -f /dev/null
+    stdin_open: true
+    tty: true
+    
+    # ローカル永続化のためのボリューム追加
+    volumes:
+      - bundle-cache:/usr/local/bundle
+      - node-modules:/myapp/node_modules
+
+volumes:
+  bundle-cache:
+  node-modules:

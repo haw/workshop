@@ -64,4 +64,11 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # In Codespaces the browser origin may differ (e.g. http://localhost:3000) from
+  # the forwarded request base URL (e.g. https://...app.github.dev). Rails' strict
+  # origin check can cause ActionController::InvalidAuthenticityToken in development.
+  # Disable the origin check only in development to avoid this mismatch.
+  config.action_controller.forgery_protection_origin_check = false
+
 end
