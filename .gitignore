@@ -32,3 +32,6 @@ tapyrus_api_client.pem
 
 *.p12
 .env
+
+# macOS
+.DS_Store
