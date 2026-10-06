@@ -4,12 +4,9 @@ ActionView::Base.field_error_proc = proc do |html_tag, instance|
 
   def format_error_message_to_html_list(error_msg)
     html_list_errors = '<ul></ul>'
-    if error_msg.is_a?(Array) || error_msg.is_a?(ActiveModel::DeprecationHandlingMessageArray)
-      error_msg.each do |msg|
-        html_list_errors.insert(-6, "<li>#{msg}</li>")
-      end
-    else
-      html_list_errors.insert(-6, "<li>#{msg}</li>")
+    Array(error_msg).each do |msg|
+      # エラーメッセージはエスケープしてから埋め込む（XSS 対策）
+      html_list_errors.insert(-6, "<li>#{ERB::Util.html_escape(msg)}</li>")
     end
     html_list_errors
   end
