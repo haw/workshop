@@ -10,8 +10,8 @@ class Token::Form
   validates :token_type, presence: true
   validates :split, presence: true
 
-  validate :amount_positive_integer?
-  validate :split_allowed?
+  validate :amount_positive_integer?, if: -> { amount.present? }
+  validate :split_allowed?, if: -> { split.present? }
 
   TOKEN_TYPE_JP = [["再発行可能トークン", 1], ["再発行不可トークン", 2], ["NFT", 3]]
 
@@ -22,10 +22,10 @@ class Token::Form
   private
 
   def amount_positive_integer?
-    amount > 0
+    errors.add(:amount, 'must be positive integer') unless amount > 0
   end
 
   def split_allowed?
-    split.between?(1, 100)
+    errors.add(:split, 'must be between 1 and 100') unless split.between?(1, 100)
   end
 end

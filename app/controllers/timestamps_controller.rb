@@ -20,15 +20,15 @@ class TimestampsController < ApplicationController
       else
         Rails.logger.error("#{self.class.name}##{__method__} res=#{res}")
         flash.now[:alert] = 'TapyrusAPIの接続で障害が発生しました'
-        render :new
+        render :new, status: :unprocessable_content
       end
     else
-      render :new
+      render :new, status: :unprocessable_content
     end
   rescue StandardError, RuntimeError => e
     Rails.logger.error(e)
     flash.now[:alert] = 'Timestampの作成に失敗しました'
-    render :new
+    render :new, status: :unprocessable_content
   end
 
   private

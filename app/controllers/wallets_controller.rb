@@ -9,7 +9,8 @@ class WalletsController < ApplicationController
     wallet = TapyrusApi.post_addresses
     if wallet.blank?
       redirect_to wallets_path, alert: 'アドレスの作成に失敗しました。'
+    else
+      redirect_to wallets_path, notice: "アドレス #{wallet} を作成しました。"
     end
-    redirect_to wallets_path, notice: "アドレス #{wallet} を作成しました。"
   end
 end

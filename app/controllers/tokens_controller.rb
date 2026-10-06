@@ -6,7 +6,7 @@ class TokensController < ApplicationController
   def new
     if request.fullpath.split('/').last == 'transfer'
       @form = Token::TransferForm.new
-      return render :transfer
+      return render :transfer, status: :unprocessable_content
     else
       @form = Token::Form.new
     end
@@ -21,15 +21,15 @@ class TokensController < ApplicationController
       else
         Rails.logger.error("#{self.class.name}##{__method__} res=#{res}")
         flash.now[:alert] = 'TapyrusAPIの接続で障害が発生しました'
-        render :new
+        render :new, status: :unprocessable_content
       end
     else
-      render :new
+      render :new, status: :unprocessable_content
     end
   rescue StandardError, RuntimeError => e
     Rails.logger.error(e)
     flash.now[:alert] = 'Tokenの作成に失敗しました'
-    render :new
+    render :new, status: :unprocessable_content
   end
 
   def transfer
@@ -42,15 +42,15 @@ class TokensController < ApplicationController
       else
         Rails.logger.error("#{self.class.name}##{__method__} res=#{res}")
         flash.now[:alert] = 'TapyrusAPIの接続で障害が発生しました'
-        render :transfer
+        render :transfer, status: :unprocessable_content
       end
     else
-      render :transfer
+      render :transfer, status: :unprocessable_content
     end
   rescue StandardError, RuntimeError => e
     Rails.logger.error(e)
     flash.now[:alert] = 'Tokenの送付に失敗しました'
-    render :transfer
+    render :transfer, status: :unprocessable_content
   end
 
   private
