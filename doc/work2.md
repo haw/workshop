@@ -1,9 +1,17 @@
 # Work2 ウェブアプリの作成
 
-このワークでは、独自のトークンを作成しそれを誰かに送付することを行います。
-`http://localhost:3000/tokens`で表示される画面の機能を実装していきます。
 
-現時点では、http://localhost:3000/tokens にアクセスするとエラー画面が表示されます。安心してください。これからきちんと表示されるように実装を進めて行きます。
+このワークでは、独自のトークンを作成し、それを誰かに送付することを行います。  
+`http://localhost:3000/tokens` で表示される画面の機能を実装していきます。  
+
+> ※Codespaces 利用者は、`http://localhost:3000` の代わりに  
+> 自分の Codespaces が割り当てた URL を使用してください。  
+> Codespaces は以下のように URL を生成します。  
+> `https://<ユーザー名>-<リポジトリ名>-<ランダムID>-<ポート>.app.github.dev/`
+
+現時点では、`http://localhost:3000/tokens` にアクセスするとエラー画面が表示されます。  
+安心してください。これからきちんと表示されるように実装を進めていきます。
+
 
 ## 1. トークンの新規作成と送付
 
@@ -28,7 +36,7 @@ end
 
 これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#operation/getTokensV2
  
-実装が完了したら、 http://localhost:3000/tokens にアクセスしてみましょう。現在保有しているトークンと、保有量が表示されます。前回のハンズオンで作成したトークンが表示されると思います。
+実装が完了したら、 http://localhost:3000/tokens にアクセスしてみましょう。現在保有しているトークンと、保有量が表示されます。Work1 で作成したトークンが表示されると思います。
 
 ### 1.2. トークンの新規発行
 
@@ -51,7 +59,7 @@ def post_tokens_issue(amount:, token_type: 1, split: 1)
 end
 ```
 
-TapyrusAPI は REST API なので、最初の `res = instance.connection.post("/api/v1/tokens/issue") do |req|` で TapyrusAPI のトークンの新規発行のエンドポイントを呼び出しています。
+TapyrusAPI は REST API なので、最初の `res = instance.connection.post("/api/v2/tokens/issue") do |req|` で TapyrusAPI のトークンの新規発行のエンドポイントを呼び出しています。
 
 次の行の `req.headers['Authorization'] = "Bearer #{instance.access_token}"` は TapyrusAPI へアクセスするためのアクセストークンを指定しています。
 
@@ -94,6 +102,8 @@ http://localhost:3000/wallets でアドレスの一覧が表示されるよう�
 
 以下のコードを実装して下さい。
 
+編集対象のファイルは `lib/utils/tapyrus_api.rb` です。
+
 ```ruby
 def get_addresses(per: 25, page: 1, purpose: "general")
   res = instance.connection.get("/api/v1/addresses") do |req|
@@ -122,6 +132,8 @@ https://doc.api.tapyrus.chaintope.com/#operation/getAddresses
 
 以下の通り実装することで、TapyrusAPI のアドレスの生成 API を実行できます。
 
+編集対象のファイルは `lib/utils/tapyrus_api.rb` です。
+
 ```ruby
 def post_addresses(purpose: "general")
   res = instance.connection.post("/api/v1/addresses") do |req|
@@ -136,7 +148,7 @@ end
 
 これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#operation/createAddress
 
-`アドレス作成` を押すと 1 つアドレスが新規に作成されます。
+実装が完了したら、http://localhost:3000/wallets の `アドレス作成` を押してみましょう。 1 つアドレスが新規に作成されます。
 
 このアドレスをトークンの送り主に教えましょう。
 Discordにご自身で発行したアドレスをメッセージ投稿してください。

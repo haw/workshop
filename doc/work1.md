@@ -6,12 +6,16 @@
 
 Rake タスクを実行して TapyrusAPI を実行できるようにしてみましょう。
 
+> コマンドは Codespaces の画面下部にあるターミナル（`bash`）で実行します。  
+> Codespaces ではなく手元の PC で Docker を使って動かしている場合は、各コマンドの先頭に `docker compose exec web` を付けて実行してください。  
+> 例: `bin/rails api:get_addresses`
+
 ### 1. TapyrusAPI への接続を確認する
 
 まずは、TapyrusAPI に接続できるかを確認します。以下のコマンドを実行して、address の一覧を取得してみましょう。
 
 ```bash
-docker compose exec web bin/rails api:get_addresses
+bin/rails api:get_addresses
 ```
 
 最初はアドレスが存在していないため、以下のような結果が表示されます。
@@ -28,7 +32,7 @@ docker compose exec web bin/rails api:get_addresses
 以下のコマンドでアドレスを作成できるように実装してみましょう。
 
 ```bash
-docker compose exec web bin/rails api:post_addresses
+bin/rails api:post_addresses
 ```
 
 このコマンドで実行されるのは `lib/tasks/api.rake` の 13 行目です。この中で`TapyrusTaskApi.post_addresses(purpose: purpose)`を呼び出しています。`TapyrusTaskApi` は `lib/utils/tapyrus_task_api.rb` に定義されています。
@@ -68,7 +72,7 @@ https://doc.api.tapyrus.chaintope.com/#operation/createAddress
 これでアドレスを新規作成できるようになりました。以下のコマンドを実行してアドレスを作成しましょう。
 
 ```bash
-docker compose exec web bin/rails api:post_addresses
+bin/rails api:post_addresses
 ```
 
 実行結果として以下のように、新規発行されたアドレスが表示されれば正しく実装されています。
@@ -83,7 +87,7 @@ docker compose exec web bin/rails api:post_addresses
 以下のコマンドでトークンを発行できるように実装してみましょう。
 
 ```bash
-docker compose exec web bin/rails api:post_tokens_issue'[100,1,10]'
+bin/rails api:post_tokens_issue'[100,1,10]'
 ```
 
 このコマンドで実行されるのは `lib/tasks/api.rake` の 29 行目です。この中で`TapyrusTaskApi.post_tokens_issue(amount: amount, token_type: token_type, split: split)`を呼び出しています。
@@ -117,7 +121,7 @@ https://doc.api.tapyrus.chaintope.com/#operation/issueTokenV2
 それでは、以下のコマンドを実行してトークンを発行しましょう。
 
 ```bash
-docker compose exec web bin/rails api:post_tokens_issue'[100,1,10]'
+bin/rails api:post_tokens_issue'[100,1,10]'
 ```
 
 実行結果として以下のように、新規発行されたトークンの ID とトークン新規発行のために発行された transaction の id が表示されれば、正しく実装できています。
@@ -128,7 +132,7 @@ docker compose exec web bin/rails api:post_tokens_issue'[100,1,10]'
 ```
 
 このトークンは、再発行が可能なので TapyrusAPI のトークンの再発行機能を呼び出すことで、追加発行が可能です。
-https://doc.api.tapyrus.chaintope.com/#operation/issueTokenV2
+https://doc.api.tapyrus.chaintope.com/#tag/token
 
 token_type に 2 を指定すると、再発行不可能なトークンとなるため、総量が固定され追加発行はできなくなります。
 
@@ -139,12 +143,14 @@ token_type を 3 にすると NFT となるため、トークンの発行数は�
 以下のコマンドでトークンを確認できるように実装してみましょう。
 
 ```bash
-docker compose exec web bin/rails api:get_tokens
+bin/rails api:get_tokens
 ```
 
 このコマンドで実行されるのは `lib/tasks/api.rake` の 21 行目です。この中で`TapyrusTaskApi.get_tokens(confirmation_only)`を呼び出しています。
 
 先ほどと同様にメソッドの中身がありませんので実装しましょう。
+
+編集する対象のファイルは `lib/utils/tapyrus_task_api.rb` です。
 
 ```ruby
 def get_tokens(confirmation_only = true)
@@ -163,7 +169,7 @@ https://doc.api.tapyrus.chaintope.com/#operation/getTokensV2
 これでコマンドが実行できるようになりました。以下のコマンドを実行してトークンを確認しましょう。
 
 ```bash
-docker compose exec web bin/rails api:get_tokens
+bin/rails api:get_tokens
 ```
 
 以下のように、所持しているトークンの ID と総量が表示されれば、正しく実装できています。
@@ -181,7 +187,7 @@ docker compose exec web bin/rails api:get_tokens
 以下のコマンドでトークンを送付できるように実装してみましょう。
 
 ```bash
-docker compose exec web bin/rails api:put_tokens_transfer'[<token_id>,<address>,<amount>]'
+bin/rails api:put_tokens_transfer'[<token_id>,<address>,<amount>]'
 ```
 
 このコマンドで実行されるのは `lib/tasks/api.rake` の 44 行目です。この中で`TapyrusTaskApi.put_tokens_transfer(token_id, address: address, amount: amount)`を呼び出しています。
@@ -203,20 +209,20 @@ end
 ```
 
 これらのコードは、先程と同様に TapyrusAPI のトークンの送付機能を呼び出すものです。
-https://doc.api.tapyrus.chaintope.com/#tag/token/operation/transferToken
+https://doc.api.tapyrus.chaintope.com/#operation/transferTokenV2
 
 4 行目の、`req.body = JSON.generate({ "address" => address, "amount" => amount })` で、トークンを送付する相手の address と、送付する数量をパラメータに指定しています。
 
-これでコマンドが実行できるようになりました。以下のコマンドを実行してトークンを発行しましょう。
-`<token_id>` は 2. で発行したトークンの `token_id` を、 `<address>` は 1. で作成した自分もしくは他人のアドレスを、 `<amount>` は 2. で発行したトークンの量 (100) 以下の値を指定します。
+これでコマンドが実行できるようになりました。以下のコマンドを実行してトークンを送付しましょう。
+`<token_id>` は 3. で発行したトークンの `token_id` を、 `<address>` は 2. で作成した自分もしくは他人のアドレスを、 `<amount>` は 3. で発行したトークンの量 (100) 以下の値を指定します。
 
 例えば、送付するトークンの ID が`c154fb27bbb2c91c1eec9357032cf029e0bf6257b429a427d5587504b3c85ca11c`、送付先のアドレスが `13aV8XCYZDQvPFEDFoYrE69qizYWJpPrpT`、送付する数量が 50 の場合は以下のコマンドになります。
 
 ```bash
-docker compose exec web bin/rails api:put_tokens_transfer'[c154fb27bbb2c91c1eec9357032cf029e0bf6257b429a427d5587504b3c85ca11c,13aV8XCYZDQvPFEDFoYrE69qizYWJpPrpT,50]'
+bin/rails api:put_tokens_transfer'[c154fb27bbb2c91c1eec9357032cf029e0bf6257b429a427d5587504b3c85ca11c,13aV8XCYZDQvPFEDFoYrE69qizYWJpPrpT,50]'
 ```
 
-実行結果として以下のように、新規発行されたトークンの ID とトークンを送付する transaction の id が表示されれば、正しく実装できています。
+実行結果として以下のように、送付したトークンの ID とトークンを送付した transaction の id が表示されれば、正しく実装できています。
 
 ```ruby
 {:token_id=>"c154fb27bbb2c91c1eec9357032cf029e0bf6257b429a427d5587504b3c85ca11c", :txid=>"33ed4f17ea85746256225eaaebd7d7d7c45337bfc80081b01cb9a2af4da5672a"}

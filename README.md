@@ -1,89 +1,79 @@
 # README
 
-B3 のワークショップで用いるサンプルコード
+Web3 Lab 2026 ワークショップで用いるサンプルコード
+
+## 動作環境
+
+| 項目 | バージョン |
+| --- | --- |
+| Ruby | 3.4.10 |
+| Rails | 8.0 |
+| PostgreSQL | 17 |
+
+GitHub Codespaces 上で動作させることを前提としています。
 
 # 起動手順
 
+## 1. Codespacesを起動する
 
-## 0. リポジトリの準備
+### 1.1. ブランチを `workshop2026` に切り替えます。
+
+リポジトリページ左上のブランチ選択メニューから `workshop2026` を選択します。
+
+### 1.2. リポジトリページの右上にある緑色の 「Code」 ボタンをクリックします。
+
+### 1.3.「Codespaces」 タブに切り替えて、「Create codespace on workshop2026」 をクリックします。
+
+少し時間がかかります。
 
 
-リモートリポジトリをcloneします。
-
-```
-git clone https://github.com/haw/workshop.git
-```
-
-リポジトリに入ってワークショップのブランチをcheckoutする
-```
-cd workshop
-git checkout -b cli origin/workshop20xx (※20xxの部分は年度毎に変更)
-git status でブランチがorigin/workshop20xx であることを確認
-```
-
-## 1. TapyrusAPI の準備
+## 2. TapyrusAPI の準備
 
 クライアント証明書のPKCS12ファイルを配置します。
 階層は以下のようになります。
 
 ```
-- workshop
+- myapp
 |-- app
 |-- bin
 |-- config
 ....
 |-- tapyrus_api_client_cert.p12
 ```
-### 1.1. クライアント証明書
+### 2.1. クライアント証明書
 
-Google ドライブで共有する `tapyrus_api_client_cert.p12` を `workshop` ディレクトリに置きます。
+Google ドライブで共有する `tapyrus_api_client_cert.p12` を `myapp` ディレクトリに置きます。
+
+ダウンロードしたクライアント証明書を赤枠の部分にドラッグ&ドロップします。
+![](./doc/images/readme/01.png)
 
 TapyrusAPI のクライアント証明書は API 利用のための認証情報になります。
 
-### 1.2. アクセストークン, TapyrusAPI エンドポイント, クライアント証明書のパスフレーズ
+### 2.2. アクセストークン, TapyrusAPI エンドポイント, クライアント証明書のパスフレーズ
+画面下部のターミナルで以下のコマンドを実行し、設定ファイルを作成します。
 
 ```bash
 cp .env.sample .env
 ```
 
+
+**※ 注意点：bashとcodespaces:serverというターミナルが開くが、bashと書かれている方で実行すること。**
+![](./doc/images/readme/02.png)
+
 `.env`ファイルを編集します。  
 アクセストークン, TapyrusAPI エンドポイント, クライアント証明書のパスフレーズはハンズオン時にお伝えします。  
 
-## 2. Web App を起動する
+### 2.3. 設定したファイルを読み込ませる
+左下の「Codespaces: ...」と書かれた青い部分をクリックして、「Codespaces: Rebuild Container」を選択する。
+![](./doc/images/readme/03.png)
 
-Docker で用意された環境を起動します。
+青色のRebuildボタンを押す。
+再ビルドされ設定ファイルが読み込まれます。
 
-### 2.1. データベースを作成する
+## 3. Web App を起動する
 
-- 初回起動時はデータベースがないため作成する必要があります。
-- 以下のコマンドを実行しデータベースを作成します。
-- ※WSL 2(Ubuntu)の人はdockerコマンドには sudo をつける
-```
-docker compose build
-docker compose run --rm web bin/rails db:create
-```
-
-### 2.2. アプリケーションを起動する
-
-```
-docker compose up --build
-```
-
-
-起動したら `http://localhost:3000` にアクセスすることでアプリケーションを使用できます。
-
- ※サーバー実行中は操作出来なくなるので、コマンド作業を続ける時は別のターミナルを開く
-
-### 2.3. Docker コンテナとデータベースを削除する
-
-このコマンドは環境を再構築したい場合に実行してください。
-Dockerのコンテナなど構築した環境を全て削除します。
-
-なお、TapyrusAPI を使ってブロックチェーンに書き込んだトランザクションは消えません。
-
-```
-docker compose down -v --remove-orphans
-```
+画面下部の「ポート」にてサーバーが起動しているので、「転送されたアドレス」をクリックしてURLにアクセスする。
+![](./doc/images/readme/04.png)
 
 # ワーク
 
