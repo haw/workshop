@@ -9,6 +9,11 @@
 
         <div class="row mt-2">
         <%= form_with model: @form, scope: "timestamp", :url => timestamps_path, :html => {:class => ''} do |f| %>
+          <% if @form.errors.any? %>
+            <div class="alert alert-danger" role="alert">
+              <%= @form.errors.full_messages.join('、') %>
+            </div>
+          <% end %>
           <!-- Timestampとして記録する内容を入力するフォームを表示 -->
           <div class="row mt-2">
             <div class="form-floating mb-3">

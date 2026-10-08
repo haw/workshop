@@ -1,6 +1,6 @@
 class TimestampsController < ApplicationController
   def index
-    @timestamps = Kaminari.paginate_array(TapyrusApi.get_timestamps.reverse).page(params[:page])
+    @timestamps = Kaminari.paginate_array((TapyrusApi.get_timestamps[:timestamps] || []).reverse).page(params[:page])
   end
 
   def show
@@ -14,7 +14,12 @@ class TimestampsController < ApplicationController
   def create
     @form = Timestamp::Form.new(create_params)
     if @form.validate
-      res = TapyrusApi.post_timestamp(content: @form.content, digest: :sha256, prefix: @form.prefix, type: :simple)
+      res = TapyrusApi.post_timestamp(
+        content: @form.content.unpack1('H*'),
+        digest: :sha256,
+        prefix: @form.prefix.to_s.unpack1('H*'),
+        type: :simple
+      )
       if res.present?
         redirect_to timestamp_path(res[:id]), notice: 'Timestampを作成しました'
       else

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'home', to: 'home#index'
+  resources :timestamps, only: [:index, :show, :new, :create]
   resources :tokens, only: [:index, :new, :create] do
     collection do
       get :transfer, to: 'tokens#new'

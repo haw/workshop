@@ -79,3 +79,4 @@ cp .env.sample .env
 
 1. [Work1 スクリプトの作成](doc/work1.md)
 1. [Work2 ウェブアプリの作成](doc/work2.md)
+1. [Work3 タイムスタンプを記録する](doc/work3.md)
